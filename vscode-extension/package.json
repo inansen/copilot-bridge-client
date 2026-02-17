@@ -1,0 +1,84 @@
+{
+  "name": "copilot-api-bridge",
+  "displayName": "Copilot API Bridge",
+  "description": "Local HTTP API proxy to GitHub Copilot — use from any language (Python, C#, TypeScript, etc.)",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "copilot-bridge.start",
+        "title": "Copilot Bridge: Start Server"
+      },
+      {
+        "command": "copilot-bridge.stop",
+        "title": "Copilot Bridge: Stop Server"
+      },
+      {
+        "command": "copilot-bridge.status",
+        "title": "Copilot Bridge: Show Status"
+      }
+    ],
+    "configuration": {
+      "title": "Copilot API Bridge",
+      "properties": {
+        "copilotBridge.port": {
+          "type": "number",
+          "default": 3741,
+          "description": "Port for the local HTTP API server"
+        },
+        "copilotBridge.grpcPort": {
+          "type": "number",
+          "default": 3742,
+          "description": "Port for the local gRPC server"
+        },
+        "copilotBridge.autoStart": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically start the server when VS Code opens"
+        },
+        "copilotBridge.defaultModel": {
+          "type": "string",
+          "default": "gpt-4o",
+          "description": "Default model family to use (e.g. gpt-4o, gpt-4o-mini, claude-3.5-sonnet, o3-mini)"
+        },
+        "copilotBridge.defaultVendor": {
+          "type": "string",
+          "default": "copilot",
+          "description": "Default model vendor (e.g. copilot)"
+        },
+        "copilotBridge.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Optional API key to protect the local server (leave empty to allow any local request)"
+        },
+        "copilotBridge.allowedOrigins": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": ["127.0.0.1", "localhost"],
+          "description": "Allowed origins for CORS"
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.10.8",
+    "@grpc/proto-loader": "^0.7.11"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["copilot", "api", "bridge", "proxy", "language-model"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

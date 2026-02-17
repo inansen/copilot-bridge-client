@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package copilot_bridge;
+
+option csharp_namespace = "CopilotBridge.Grpc";
+
+// ─── Service ────────────────────────────────────────────────────────────────
+
+service CopilotBridgeService {
+  // Get server status
+  rpc GetStatus (StatusRequest) returns (StatusReply);
+
+  // List available models
+  rpc ListModels (ListModelsRequest) returns (ListModelsReply);
+
+  // Send chat request — full response
+  rpc Chat (ChatRequest) returns (ChatReply);
+
+  // Send chat request — streaming response
+  rpc ChatStream (ChatRequest) returns (stream ChatStreamChunk);
+}
+
+// ─── Messages ───────────────────────────────────────────────────────────────
+
+message StatusRequest {}
+
+message StatusReply {
+  string status = 1;
+  int32  port = 2;
+  string default_model = 3;
+  int32  requests_served = 4;
+  string version = 5;
+}
+
+message ListModelsRequest {}
+
+message ListModelsReply {
+  repeated ModelInfo models = 1;
+}
+
+message ModelInfo {
+  string id = 1;
+  string name = 2;
+  string vendor = 3;
+  string family = 4;
+  string version = 5;
+  int32  max_input_tokens = 6;
+}
+
+message ChatMessage {
+  string role = 1;     // "user" | "assistant"
+  string content = 2;
+}
+
+message ChatRequest {
+  repeated ChatMessage messages = 1;
+  string model = 2;          // optional — model family override
+  string vendor = 3;         // optional — vendor override
+  string system_prompt = 4;  // optional — system instruction
+}
+
+message ChatReply {
+  int32  id = 1;
+  string model = 2;
+  string content = 3;
+}
+
+message ChatStreamChunk {
+  string content = 1;        // text fragment (empty on final chunk)
+  bool   done = 2;           // true on final chunk
+  string error = 3;          // non-empty if error occurred
+  int32  total_length = 4;   // total chars (set on final chunk)
+}
