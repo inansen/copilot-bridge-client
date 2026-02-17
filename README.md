@@ -6,10 +6,10 @@ A VS Code extension that exposes GitHub Copilot as a **local HTTP + gRPC API**, 
 
 ```
 ┌──────────────┐  HTTP / gRPC ┌──────────────────┐  VS Code LM API  ┌──────────┐
-│  Your Code   │ ───────────► │ Copilot Bridge    │ ───────────────► │ GitHub   │
-│ (Python/C#/  │ ◄─────────── │ (VS Code ext)     │ ◄─────────────── │ Copilot  │
-│  TS/curl)    │  JSON / SSE  │ HTTP :3741        │                  │          │
-│              │  Protobuf    │ gRPC :3742        │                  │          │
+│  Your Code   │ ───────────► │ Copilot Bridge   │ ───────────────► │ GitHub   │
+│ (Python/C#/  │ ◄─────────── │ (VS Code ext)    │ ◄─────────────── │ Copilot  │
+│  TS/curl)    │  JSON / SSE  │ HTTP :3741       │                  │          │
+│              │  Protobuf    │ gRPC :3742       │                  │          │
 └──────────────┘              └──────────────────┘                  └──────────┘
 ```
 
